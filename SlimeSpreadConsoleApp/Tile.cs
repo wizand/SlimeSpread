@@ -36,4 +36,9 @@ public class Tile
         sb.Append(" IsWall=[" + IsWall + "] IsSlime=[" + IsSlime() + "] SlimeHeight=[" + SlimeHeight + "]");
         return sb.ToString();
     }
+
+    internal void ReproduceSlime()
+    {
+        SlimeHeight += 1;
+    }
 }

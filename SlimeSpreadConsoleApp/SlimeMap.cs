@@ -37,32 +37,12 @@ internal class SlimeMap
 
     internal void ApplyRules()
     {
-        
-        for (int y = 0; y < tiles.Length; y++)
-        {
-            for (int x = 0; x < tiles[y].GetLength(0); x++)
-            {
-                if (tiles[y][x].IsWall)
-                {
-                    continue;
-                }
-
-                if (tiles[y][x].IsSlime())
-                {
-                    if (ThrowDice(10))
-                    {
-                        tiles[y][x].KillSlime();
-                    }
-                }
-            }
-        }
+        Ruleset.RuleYouDie(ref tiles);
+        Ruleset.RuleYouReproduce(ref tiles);
+        Ruleset.RuleYouSpread(ref tiles);
     }
 
-    private bool ThrowDice(int chance)
-    {
-        Random rand = new Random();
-        return !(chance <= rand.Next(100));
-    }
+
 
     internal void Print()
     {
