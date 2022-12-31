@@ -17,7 +17,7 @@ internal class SlimeMap
         {
             for (int x = 0; x < initialSlime[y].GetLength(0); x++)
             {
-                if (initialSlime[x][y] == 0)
+                if (initialSlime[y][x] == 0)
                 {
                     if (initialWalls[y][x] == 0)
                     {
@@ -28,11 +28,40 @@ internal class SlimeMap
                     }
                 } else
                 {
-                    tiles[y][x] = new SlimeTile(ref tiles, coords: new Coords(x, y), slimeHeight: initialSlime[y][x]);
+                    tiles[y][x] = new Tile(ref tiles, coords: new Coords(x, y), slimeHeight: initialSlime[y][x]);
                 }
             }
         }
 
+    }
+
+    internal void ApplyRules()
+    {
+        
+        for (int y = 0; y < tiles.Length; y++)
+        {
+            for (int x = 0; x < tiles[y].GetLength(0); x++)
+            {
+                if (tiles[y][x].IsWall)
+                {
+                    continue;
+                }
+
+                if (tiles[y][x].IsSlime())
+                {
+                    if (ThrowDice(10))
+                    {
+                        tiles[y][x].KillSlime();
+                    }
+                }
+            }
+        }
+    }
+
+    private bool ThrowDice(int chance)
+    {
+        Random rand = new Random();
+        return !(chance <= rand.Next(100));
     }
 
     internal void Print()
@@ -47,9 +76,9 @@ internal class SlimeMap
                 {
                     sb.Append('#');
                 }
-                else if (tiles[y][x] is SlimeTile)
+                else if (tiles[y][x].IsSlime())
                 {
-                    sb.Append(((SlimeTile)tiles[y][x]).SlimeHeight + "");
+                    sb.Append(tiles[y][x].SlimeHeight + "");
                 }
                 else
                 {
@@ -60,17 +89,4 @@ internal class SlimeMap
             System.Console.WriteLine(sb.ToString());
         }
     }
-}
-
-public class Coords 
-{
-    public Coords(int x, int y)
-    {
-        X = x;
-        Y = y;
-    }
-
-    int X { get; set; }
-    int Y { get; set; }
-
 }
