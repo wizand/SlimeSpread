@@ -7,6 +7,9 @@ internal class SlimeMap
 
     public SlimeMap(int xSize, int ySize, int[][] initialWalls = null, int[][] initialSlime = null)
     {
+        Coords.Y_MAX = ySize;
+        Coords.X_MAX = xSize;  
+
         tiles = new Tile[xSize][];
         for (int y = 0; y < ySize; y++)
         {
@@ -35,17 +38,36 @@ internal class SlimeMap
 
     }
 
+    internal bool IsSlimeDead()
+    {
+        for (int y = 0; y < tiles.Length; y++)
+        {
+            for (int x = 0; x < tiles[y].GetLength(0); x++)
+            {
+                if (tiles[y][x].IsSlime())
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     internal void ApplyRules()
     {
         Ruleset.RuleYouDie(ref tiles);
         Ruleset.RuleYouReproduce(ref tiles);
         Ruleset.RuleYouSpread(ref tiles);
+        Ruleset.RuleYouAreOvercrowded(ref tiles);
     }
 
 
 
-    internal void Print()
+    internal string[] GetMapStateAsStringLines()
     {
+
+        string[] lines = new string[tiles.Length];
         for (int y = 0; y < tiles.GetLength(0); y++)
         {
             StringBuilder sb = new();
@@ -66,7 +88,8 @@ internal class SlimeMap
                 }
             }
             sb.Append("]");
-            System.Console.WriteLine(sb.ToString());
+            lines[y] = sb.ToString();
         }
+        return lines;
     }
 }

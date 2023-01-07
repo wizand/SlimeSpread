@@ -1,4 +1,6 @@
 ﻿internal class Ruleset
+
+    
 {
     internal static void RuleYouDie(ref Tile[][] slimeMap)
     {
@@ -22,6 +24,10 @@
         }
     }
 
+    /// <summary>
+    /// Each slime cell has a chance to reproduce.
+    /// </summary>
+    /// <param name="slimeMap"></param>
     internal static void RuleYouReproduce(ref Tile[][] slimeMap)
     {
         for (int y = 0; y < slimeMap.Length; y++)
@@ -35,7 +41,7 @@
 
                 if (slimeMap[y][x].IsSlime())
                 {
-                    if (ThrowDice(10))
+                    if (ThrowDice(13))
                     {
                         slimeMap[y][x].ReproduceSlime();
                     }
@@ -50,6 +56,7 @@
         return !(chance <= rand.Next(100));
     }
 
+
     internal static void RuleYouSpread(ref Tile[][] tiles)
     {
         for (int y = 0; y < tiles.Length; y++)
@@ -60,10 +67,33 @@
                 {
                     if (tiles[y][x].SlimeHeight > 1)
                     {
-                        //Check neighbors 
+                        //TODO: Make this relative to the current tiles height - lowest neighbour so spread doesnt happen to upper slope
+                        Tile lowestNeighbor = tiles[y][x].GetLowestNeighbour();
+                        lowestNeighbor.SlimeHeight += 1;
+                        tiles[y][x].SlimeHeight -= 1; 
                     }
                 }
             }
         }
     }
+
+
+    private static int overcrowdingLimit = 5;
+    internal static void RuleYouAreOvercrowded(ref Tile[][] tiles)
+    {
+        for (int y = 0; y < tiles.Length; y++)
+        {
+            for (int x = 0; x < tiles[y].GetLength(0); x++)
+            {
+                if (tiles[y][x].IsSlime())
+                {
+                    if (tiles[y][x].SlimeHeight > overcrowdingLimit)
+                    {
+                        tiles[y][x].KillSlime();
+                    }
+                }
+            }
+        }
+    }
+
 }
