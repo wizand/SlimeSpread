@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-internal class SlimeMap
+public class SlimeMap
 {
 
     public Tile[][] tiles;
@@ -38,7 +38,7 @@ internal class SlimeMap
 
     }
 
-    internal bool IsSlimeDead()
+    public bool IsSlimeDead()
     {
         for (int y = 0; y < tiles.Length; y++)
         {
@@ -54,7 +54,7 @@ internal class SlimeMap
         return true;
     }
 
-    internal void ApplyRules()
+    public void ApplyRules()
     {
         Ruleset.RuleYouDie(ref tiles);
         Ruleset.RuleYouReproduce(ref tiles);
@@ -64,7 +64,7 @@ internal class SlimeMap
 
 
 
-    internal string[] GetMapStateAsStringLines()
+    public string[] GetMapStateAsStringLines()
     {
 
         string[] lines = new string[tiles.Length];

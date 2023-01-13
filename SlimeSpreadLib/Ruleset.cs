@@ -1,6 +1,5 @@
-﻿internal class Ruleset
+﻿public class Ruleset
 
-    
 {
     internal static void RuleYouDie(ref Tile[][] slimeMap)
     {
@@ -70,7 +69,7 @@
                         //TODO: Make this relative to the current tiles height - lowest neighbour so spread doesnt happen to upper slope
                         Tile lowestNeighbor = tiles[y][x].GetLowestNeighbour();
                         lowestNeighbor.SlimeHeight += 1;
-                        tiles[y][x].SlimeHeight -= 1; 
+                        tiles[y][x].SlimeHeight -= 1;
                     }
                 }
             }
