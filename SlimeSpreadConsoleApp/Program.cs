@@ -6,15 +6,8 @@ using System.Text;
 
 int rounds = 150;
 string endMessage = "";
-SlimeMap? map = null;
-//InitiateMap(10, 10);
-InitiateMap(initialWalls: DemoArrays.initial10x10Walls, initialSlime: DemoArrays.initial10x10Slime);
+SlimeMap? map = SlimeMap.InitiateMap(initialWalls: DemoArrays.initial10x10Walls, initialSlime: DemoArrays.initial10x10Slime);
 RunSimulation();
-
-void InitiateMap(int[][] initialWalls, int[][] initialSlime)
-{
-    map = new SlimeMap(initialWalls.Length, initialWalls[0].Length, initialWalls, initialSlime);
-}
 
 
 void RunSimulation()

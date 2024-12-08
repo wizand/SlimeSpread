@@ -51,5 +51,26 @@ namespace SlimeSpreadConsoleApp
             new int[10]{ 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
             new int[10]{ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
         };
+
+        public static int[][] initial7x7SlimySlime =
+                    {
+            new int[7]{ 0, 0, 0, 0, 0, 0, 0 },
+            new int[7]{ 0, 3, 0, 0, 0, 0, 0 },
+            new int[7]{ 0, 0, 0, 0, 0, 0, 0 },
+            new int[7]{ 0, 0, 0, 4, 6, 0, 0 },
+            new int[7]{ 0, 0, 0, 0, 0, 0, 0 },
+            new int[7]{ 0, 1, 1, 0, 0, 3, 0 },
+            new int[7]{ 0, 0, 0, 0, 0, 0, 0 }
+        };
+        public static int[][] initial7x7SlimyWalls =
+            {
+            new int[7]{ 1, 1, 1, 2, 1, 1, 1 },
+            new int[7]{ 1, 0, 0, 0, 0, 0, 1 },
+            new int[7]{ 2, 0, 0, 0, 0, 0, 1 },
+            new int[7]{ 3, 0, 0, 0, 0, 0, 1 },
+            new int[7]{ 1, 0, 0, 0, 0, 0, 1 },
+            new int[7]{ 1, 0, 0, 0, 0, 0, 1 },
+            new int[7]{ 1, 1, 1, 1, 1, 1, 1 }
+        };
     }
 }

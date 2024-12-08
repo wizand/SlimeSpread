@@ -3,7 +3,35 @@
 public class SlimeMap
 {
 
+    public static SlimeMap InitiateMap(int[][] initialWalls, int[][] initialSlime)
+    {
+        return new SlimeMap(initialWalls.Length, initialWalls[0].Length, initialWalls, initialSlime);
+    }
+
+
     public Tile[][] tiles;
+    private Tile[]? _tiles = null;
+    public int XSize { get; }
+    public int YSize { get; }
+    public Tile[] tilesInArray 
+    { 
+        get
+        { 
+            if (_tiles == null)
+            {
+                _tiles = new Tile[tiles.Length * tiles[0].Length];
+                for (int y = 0; y < tiles.Length; y++)
+                {
+                    for ( int x = 0; x < tiles[y].Length; x++)
+                    {
+                        _tiles[y * tiles[0].Length + x] = tiles[y][x];
+                    }
+                }
+            }
+            return _tiles;
+
+        } 
+    }
 
     public SlimeMap(int xSize, int ySize, int[][] initialWalls = null, int[][] initialSlime = null)
     {

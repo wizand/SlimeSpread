@@ -8,10 +8,22 @@ public class Tile
         IsWall = isWall;
         Coords = coords;
         SlimeHeight = slimeHeight;
+        if (isWall == true)
+        {
+            TILE_TYPE = TileType.WALL;
+        } else if (slimeHeight < 1 )
+        {
+            TILE_TYPE = TileType.EMPTY;
+        } else
+        {
+            TILE_TYPE = TileType.SLIME;
+        }
+
     }
 
     public int SlimeHeight { get; set; }
     public Tile[][] Tiles { get; }
+    public TileType TILE_TYPE{ get; set;  }
     public bool IsWall { get; }
     public Coords Coords { get; }
 
@@ -26,6 +38,7 @@ public class Tile
         if (SlimeHeight < 0)
         {
             SlimeHeight = 0;
+            TILE_TYPE = TileType.EMPTY;
         }
         Console.WriteLine("Slime has died at {0}. Slime left on tile=[{1}].", Coords.ToString(), SlimeHeight);
     }
@@ -41,6 +54,11 @@ public class Tile
     internal void ReproduceSlime()
     {
         SlimeHeight += 1;
+        if (SlimeHeight > 0)
+        {
+            TILE_TYPE = TileType.SLIME;
+        }
+
         Console.WriteLine("Slime has spawned at {0}. Slime now on tile=[{1}].", Coords.ToString(), SlimeHeight);
     }
 
