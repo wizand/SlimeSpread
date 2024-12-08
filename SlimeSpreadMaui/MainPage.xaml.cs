@@ -3,6 +3,7 @@ using SkiaSharp.Views.Maui;
 using SkiaSharp;
 using SkiaSharp.Views.Maui.Controls;
 using SlimeSpreadConsoleApp;
+using SlimeSpreadLib;
 
 
 namespace SlimeSpreadMaui
@@ -15,12 +16,41 @@ namespace SlimeSpreadMaui
         //InitiateMap(10, 10);
         public MainPage()
         {
-            map = SlimeMap.InitiateMap(initialWalls: DemoArrays.initial10x10Walls, initialSlime:   DemoArrays.initial10x10Slime);
+            //map = SlimeMap.InitiateMap(initialWalls: DemoArrays.initial10x10Walls, initialSlime:   DemoArrays.initial10x10Slime);
+
+            var wallsMap = DemoArrays.generateBasicWalls(100, 100);
+            var slimeMap = DemoArrays.generateBasicSlimes(100, 100, ref wallsMap);
 
 
+            map = new SlimeMap(100, 100, wallsMap, slimeMap);
+
+            Simulation sim = new(map, ConsoleSim);
             InitializeComponent();
         }
 
+        public void 2dSim()
+        {
+            if (map == null)
+            {
+                Console.WriteLine("Slime map not initiated. Cannot run simulation.");
+                return;
+            }
+            bool isProgressing = true;
+            int currentRound = 0;
+            while (isProgressing)
+            {
+                currentRound++;
+                
+                string[] prevState = map.GetMapStateAsStringLines();
+                map.ApplyRules();
+                string[] currentState = map.GetMapStateAsStringLines();
+
+                //printStates(prevState, currentState);
+                //isProgressing = checkStatus(map);
+                Console.WriteLine("");
+            }
+            Console.WriteLine("Slime spread ended to round {0}. ", currentRound);
+        }
 
 
         // Handle the PaintSurface event

@@ -2,15 +2,18 @@
 
 using SlimeSpreadConsoleApp;
 
+using SlimeSpreadLib;
+
 using System.Text;
 
 int rounds = 150;
 string endMessage = "";
 SlimeMap? map = SlimeMap.InitiateMap(initialWalls: DemoArrays.initial10x10Walls, initialSlime: DemoArrays.initial10x10Slime);
-RunSimulation();
+
+Simulation simulation = new(map, ConsoleSim);
 
 
-void RunSimulation()
+void ConsoleSim()
 {
     if (map == null)
     {

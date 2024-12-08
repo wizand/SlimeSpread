@@ -72,5 +72,78 @@ namespace SlimeSpreadConsoleApp
             new int[7]{ 1, 0, 0, 0, 0, 0, 1 },
             new int[7]{ 1, 1, 1, 1, 1, 1, 1 }
         };
+
+        public static int[][] generateBasicWalls(int x, int y)
+        {
+            int[][] map = new int[y][];
+            for (int i = 0; i < y; i++)
+            {
+                map[i] = new int[x];
+            }
+
+            for (int myy = 0; myy < y; myy++)
+            {
+                for (int myx = 0; myx < x; myx++)
+                {
+                    if (myy == 0 || myy == y - 1 || myx == 0 || myx == x - 1)
+                    {
+                        map[myy][myx] = 1;
+                    }
+                    else
+                    {
+                        map[myy][myx] = 0;
+                    }
+                }
+            }
+
+            return map;
+        }
+
+        public static int[][] generateBasicSlimes(int x, int y, ref int[][] walls)
+        {
+            Random rand = new Random();
+            int[][] map = new int[y][];
+            for (int i = 0; i < y; i++)
+            {
+                map[i] = new int[x];
+            }
+
+            //Random wall segments
+            for (int myy = 0; myy < y; myy++)
+            {
+                for (int myx = 0; myx < x; myx++)
+                {
+                    if (walls[myy][myx] == 1)
+                    {
+                        continue;
+                    }
+
+                    if (rand.NextInt64(0, 100) > 85)
+                    {
+                        walls[myy][myx] = 1;
+                    }
+                }
+            }
+
+            //Random slime pieces
+            for (int myy = 0; myy < y; myy++)
+            {
+                for (int myx = 0; myx < x; myx++)
+                {
+                    if (walls[myy][myx] == 1) 
+                    {
+                        continue;
+                    }
+
+                    if (rand.NextInt64(0, 100) > 80)
+                    {
+                        map[myy][myx] = (int)rand.NextInt64(1, 6);
+                    }
+                }
+            }
+
+            return map;
+        }
+
     }
 }
