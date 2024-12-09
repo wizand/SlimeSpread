@@ -39,7 +39,7 @@ namespace SlimeSpreadDrawer
         {
             List <SlimeDrawable> drawables = new();
            
-            foreach(Tile tile in map.tilesInArray)
+            foreach(Tile tile in map.TilesInArray)
             {
                 drawables.Add(new SlimeDrawable(tile, CanvasWidth, CanvasHeight));
             }

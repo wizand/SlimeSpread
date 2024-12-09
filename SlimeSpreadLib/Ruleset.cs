@@ -1,6 +1,9 @@
 ﻿public class Ruleset
 
 {
+
+    public const int DEATH_CHANGE = 20;
+    public const int REPRODUCTION_CHANCE = 13;
     internal static void RuleYouDie(ref Tile[][] slimeMap)
     {
         for (int y = 0; y < slimeMap.Length; y++)
@@ -14,7 +17,7 @@
 
                 if (slimeMap[y][x].IsSlime())
                 {
-                    if (ThrowDice(10))
+                    if (ThrowDice(DEATH_CHANGE))
                     {
                         slimeMap[y][x].KillSlime();
                     }
@@ -40,7 +43,7 @@
 
                 if (slimeMap[y][x].IsSlime())
                 {
-                    if (ThrowDice(13))
+                    if (ThrowDice(REPRODUCTION_CHANCE))
                     {
                         slimeMap[y][x].ReproduceSlime();
                     }

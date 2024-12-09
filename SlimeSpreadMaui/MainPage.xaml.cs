@@ -4,6 +4,7 @@ using SkiaSharp;
 using SkiaSharp.Views.Maui.Controls;
 using SlimeSpreadConsoleApp;
 using SlimeSpreadLib;
+using Windows.Networking.NetworkOperators;
 
 
 namespace SlimeSpreadMaui
@@ -13,6 +14,7 @@ namespace SlimeSpreadMaui
         int count = 0;
         DrawHandler _slimeSpreadDrawer;
         SlimeMap? map = null;
+        Simulation sim;
         //InitiateMap(10, 10);
         public MainPage()
         {
@@ -24,32 +26,13 @@ namespace SlimeSpreadMaui
 
             map = new SlimeMap(100, 100, wallsMap, slimeMap);
 
-            Simulation sim = new(map, ConsoleSim);
+            sim = new(map, SkiaSim, rounds: 100);
             InitializeComponent();
         }
 
-        public void 2dSim()
+        public void SkiaSim()
         {
-            if (map == null)
-            {
-                Console.WriteLine("Slime map not initiated. Cannot run simulation.");
-                return;
-            }
-            bool isProgressing = true;
-            int currentRound = 0;
-            while (isProgressing)
-            {
-                currentRound++;
-                
-                string[] prevState = map.GetMapStateAsStringLines();
-                map.ApplyRules();
-                string[] currentState = map.GetMapStateAsStringLines();
-
-                //printStates(prevState, currentState);
-                //isProgressing = checkStatus(map);
-                Console.WriteLine("");
-            }
-            Console.WriteLine("Slime spread ended to round {0}. ", currentRound);
+            Console.WriteLine("Running simulation");
         }
 
 
@@ -62,7 +45,7 @@ namespace SlimeSpreadMaui
                 _slimeSpreadDrawer = new(e.Info.Width, e.Info.Height);
             }
             var canvas = e.Surface.Canvas;
-            _slimeSpreadDrawer.Draw(e.Surface, map);
+            _slimeSpreadDrawer.Draw(e.Surface, sim.GetSimulationMap());
             
 
 
@@ -77,7 +60,7 @@ namespace SlimeSpreadMaui
             else
                 CounterBtn.Text = $"Clicked {count} times";
 
-            //_slimeSpreadDrawer.Draw();
+            sim.RunSimulation();
             skCanvasView.InvalidateSurface();
 
             SemanticScreenReader.Announce(CounterBtn.Text);

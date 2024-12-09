@@ -81,3 +81,4 @@ bool checkStatus(SlimeMap map)
     endMessage = "Rounds ended.";
     return false;
 }
+

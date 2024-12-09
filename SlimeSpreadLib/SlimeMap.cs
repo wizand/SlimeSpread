@@ -13,7 +13,7 @@ public class SlimeMap
     private Tile[]? _tiles = null;
     public int XSize { get; }
     public int YSize { get; }
-    public Tile[] tilesInArray 
+    public Tile[] TilesInArray 
     { 
         get
         { 
@@ -31,6 +31,19 @@ public class SlimeMap
             return _tiles;
 
         } 
+    }
+
+    public SlimeMap(SlimeMap map)
+    {
+        tiles = new Tile[map.tiles.Length][];
+        for (int y = 0; y < map.tiles.Length; y++)
+        {
+            tiles[y] = new Tile[map.tiles[y].Length];
+            for (int x = 0; x < map.tiles[y].Length; x++)
+            {
+                tiles[y][x] = new Tile(ref tiles, coords: new Coords(x, y), isWall: map.tiles[y][x].IsWall, slimeHeight: map.tiles[y][x].SlimeHeight);
+            }
+        }
     }
 
     public SlimeMap(int xSize, int ySize, int[][] initialWalls = null, int[][] initialSlime = null)
@@ -119,5 +132,10 @@ public class SlimeMap
             lines[y] = sb.ToString();
         }
         return lines;
+    }
+
+    public SlimeMap GetMapCopy()
+    {
+        return new SlimeMap(this);
     }
 }
